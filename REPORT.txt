@@ -1,0 +1,42 @@
+- Describe how you keep track of open file offsets
+  I keep track of the open file offsets by creating an offset field in my
+  file descriptor struct that updates in my read. In my read method I add the number
+  of bytes read to my offset field and in seek I reset my offset to zero.
+
+- Explain why it's a good idea to copy the exec args in kernel space
+  before performing the exec
+  In exec you have to load your elf file in which will overwrite you user space
+  and overwrite your arguments. So to not overwrite your args you store them in 
+  kernel space which is shared and doesn't get touched by exec. You also clear
+  out your private virtual memory so if you save your args in private memory it will
+  get lost in exec so save them onto kernel space/heap.
+
+- List 3 security exposures that your implementation of exec addressed
+  1)If you dont clear out the virtual address space then the process will be able to access the 
+  vitrual memory of the previous process which can lead to secrutiy exposure because they shouldn't be allowed to access 
+  that data.
+  2)You also have to clearn out the array of children that the parent holds so that the new process can't 
+  access the child's data.
+  3) Nulling out the semaphores are also necessary so that the new process can't mess around with the semaphores
+  and cause dead locks between the previous parent's children.
+
+- Read about the opendir system call. Why do we need a dedicated system
+  call for opening directories? Why not just open a directory as if it
+  were a file and look at its internal representation?
+  opendir returns a pointer to a directory stream and calls open internally for the files contained inside of it.
+  We need a different system call beause there are levels to a directory and it can contain multiple files so we need
+  a system call that can handle that. Open dir's return is a pointer to the dir stream where you can access the open files
+  contained within it. Also directories can have symbolic links so opendir will follow these links.
+
+  source: https://unix.stackexchange.com/questions/504368/does-linux-represent-an-opened-directory-in-the-same-way-as-an-opened-file 
+
+- We implement the open, close, read, and write system calls. All
+  Unix-like systems have corresponding higher level library
+  functions: fopen, fclose, fread, and fwrite. How come?
+
+  Many systems implmement more higher level library functions to be able to have more user abstractions
+  for more complex architectures. Library functions also don't touch the kernel so there is an extra 
+  security measure there to protect against malware that can try and access data from the low-level system 
+  calls that it is not allowed to. 
+
+  source: https://www.thegeekstuff.com/2012/07/system-calls-library-functions/
