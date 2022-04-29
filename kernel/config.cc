@@ -79,9 +79,17 @@ struct RSD {
 } __attribute__ ((packed));
 
 typedef struct RSD RSD;
-
+   
 struct REDTBLENTRY {
-    
+    uint8_t irqVector;
+    char deliveryMode[2];
+    char destmode;
+    char deliveryStatus;
+    char pinPolarity;
+    char remoteIRR;
+    char triggerMode;
+    char mask;
+    char destination[7];
 } __attribute__ ((packed));
 
 typedef struct REDTBLENTRY REDTBLENTRY;
@@ -189,6 +197,15 @@ void configInit(Config* config) {
             // read from ioredtable
             uint32_t volatile *ioapic = (uint32_t volatile *) config->ioAPIC;
             ioapic[0] = ((base+0x10) & 0xff);
+            REDTBLENTRY *ioRedTbl = new REDTBLENTRY();
+            ioRedTbl->irqVector = source->IRQ;
+            ioRedTbl->deliveryMode = ioapic[2];
+            ioRedTbl->destmode= ioapic[3];
+            ioRedTbl->pinPolarity= ioapic[4];
+            ioRedTbl->remoteIRR= ioapic[5];
+            ioRedTbl->triggerMode= ioapic[6];
+            ioRedTbl->mask= ioapic[7];
+            ioRedTbl->destination= ioapic[8];
         }
     }
 
