@@ -61,7 +61,16 @@ struct IOAPIC_ENTRY {
 typedef struct IOAPIC_ENTRY IOAPIC_ENTRY;
 
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
+<<<<<<< Updated upstream
+<<<<<<< Updated upstream
 =======
+=======
+>>>>>>> Stashed changes
+=======
+>>>>>>> Stashed changes
+=======
+>>>>>>> Stashed changes
 // struct SOURCE_ENTRY {
 //     MADT_ENTRY madt;
 //     uint8_t bus;
@@ -72,6 +81,15 @@ typedef struct IOAPIC_ENTRY IOAPIC_ENTRY;
 
 // typedef struct SOURCE_ENTRY SOURCE_ENTRY;
 
+<<<<<<< Updated upstream
+<<<<<<< Updated upstream
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
+>>>>>>> Stashed changes
+=======
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
 struct RSD {
     char Signature[8];
@@ -84,12 +102,30 @@ struct RSD {
 typedef struct RSD RSD;
 
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
+<<<<<<< Updated upstream
+<<<<<<< Updated upstream
 =======
+=======
+>>>>>>> Stashed changes
+=======
+>>>>>>> Stashed changes
+=======
+>>>>>>> Stashed changes
 // struct REDTBLENTRY {
     
 // } __attribute__ ((packed));
 
 // typedef struct REDTBLENTRY REDTBLENTRY;
+<<<<<<< Updated upstream
+<<<<<<< Updated upstream
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
+>>>>>>> Stashed changes
+=======
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
 static int iseq(const char* a, const char* b, uint32_t len) {
     for (uint32_t i = 0; i<len; i++) {
@@ -142,6 +178,18 @@ Config kConfig;
 
 void configInit(Config* config) {
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
+<<<<<<< Updated upstream
+<<<<<<< Updated upstream
+=======
+    // uint32_t base = 0;
+>>>>>>> Stashed changes
+=======
+    // uint32_t base = 0;
+>>>>>>> Stashed changes
+=======
+    // uint32_t base = 0;
+>>>>>>> Stashed changes
 =======
     // uint32_t base = 0;
 >>>>>>> Stashed changes
@@ -193,8 +241,17 @@ void configInit(Config* config) {
             // Debug::printf("ID: %d, address: 0x%x, base: %d\n", apic->apicId, apic->address, apic->base);
             config->ioAPIC = apic->address;
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
+<<<<<<< Updated upstream
+<<<<<<< Updated upstream
         }
 =======
+=======
+>>>>>>> Stashed changes
+=======
+>>>>>>> Stashed changes
+=======
+>>>>>>> Stashed changes
             // base = apic->base;
         } 
         // else if (entryPtr->type == 2) { //added this for keyboard
@@ -204,6 +261,15 @@ void configInit(Config* config) {
         //     uint32_t volatile *ioapic = (uint32_t volatile *) config->ioAPIC;
         //     ioapic[0] = ((base+0x10) & 0xff);
         // }
+<<<<<<< Updated upstream
+<<<<<<< Updated upstream
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
+>>>>>>> Stashed changes
+=======
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
     }
 
