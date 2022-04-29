@@ -2,6 +2,7 @@
 #include "debug.h"
 #include "config.h"
 
+#define KEYBOARD_INTERRUPT 0x33;
 struct MemInfo {
     uint16_t ax;
     uint16_t bx;
@@ -81,7 +82,7 @@ struct RSD {
 typedef struct RSD RSD;
    
 struct REDTBLENTRY {
-    uint8_t irqVector;
+    uint8_t isrVector;
     char deliveryMode[2];
     char destmode;
     char deliveryStatus;
@@ -89,7 +90,7 @@ struct REDTBLENTRY {
     char remoteIRR;
     char triggerMode;
     char mask;
-    char destination[7];
+    uint8_t destination;
 } __attribute__ ((packed));
 
 typedef struct REDTBLENTRY REDTBLENTRY;
@@ -145,6 +146,7 @@ Config kConfig;
 
 void configInit(Config* config) {
     uint32_t base = 0;
+    uint8_t apicID = 0;
     config->memSize = memAbove1M() + (1 << 20);
     RSD* rsdp = findRSD();
     //Debug::printf("found rsd %x\n",(uint32_t)rsdp);
@@ -190,6 +192,7 @@ void configInit(Config* config) {
             // Debug::printf("ID: %d, address: 0x%x, base: %d\n", apic->apicId, apic->address, apic->base);
             config->ioAPIC = apic->address;
             base = apic->base;
+            apicID = apic->apicId;
         } 
         else if (entryPtr->type == 2) { //added this for keyboard
             SOURCE_ENTRY *source = (SOURCE_ENTRY*) entryPtr;
@@ -198,14 +201,18 @@ void configInit(Config* config) {
             uint32_t volatile *ioapic = (uint32_t volatile *) config->ioAPIC;
             ioapic[0] = ((base+0x10) & 0xff);
             REDTBLENTRY *ioRedTbl = new REDTBLENTRY();
-            ioRedTbl->irqVector = source->IRQ;
-            ioRedTbl->deliveryMode = ioapic[2];
-            ioRedTbl->destmode= ioapic[3];
-            ioRedTbl->pinPolarity= ioapic[4];
-            ioRedTbl->remoteIRR= ioapic[5];
-            ioRedTbl->triggerMode= ioapic[6];
-            ioRedTbl->mask= ioapic[7];
-            ioRedTbl->destination= ioapic[8];
+            // set isrvector
+            uint32_t lowBits = KEYBOARD_INTERRUPT;
+            uint32_t highBits = ioapic[1];
+            (lowBits >> 24) << 24;
+            ioapic[0] = lowBits;
+            
+            for(int i = 8; i < 16; i++) {
+                ioapic[i] = 0;
+            }
+            // mask 7 through 15
+            // set dest mode to ioapic id
+            ioapic[56] = apicID;
         }
     }
 
