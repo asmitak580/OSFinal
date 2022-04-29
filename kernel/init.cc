@@ -16,6 +16,7 @@
 #include "stdint.h"
 #include "tss.h"
 #include "sys.h"
+#include "keyboard.h"
 
 struct Stack {
     static constexpr int BYTES = 4096;
@@ -143,6 +144,9 @@ extern "C" void kernelInit(void) {
 
     // Initialize the PIT
     Pit::init();
+
+    //initialize the KEYBOARD 
+    KEYBOARD::init();
 
     auto id = SMP::me();
 
