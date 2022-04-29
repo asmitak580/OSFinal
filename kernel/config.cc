@@ -60,6 +60,16 @@ struct IOAPIC_ENTRY {
 
 typedef struct IOAPIC_ENTRY IOAPIC_ENTRY;
 
+struct SOURCE_ENTRY {
+    MADT_ENTRY madt;
+    uint8_t bus;
+    uint8_t IRQ;
+    uint32_t GSI;
+    uint16_t flags;
+} __attribute__ ((packed));
+
+typedef struct SOURCE_ENTRY SOURCE_ENTRY;
+
 struct RSD {
     char Signature[8];
     uint8_t Checksum;
@@ -108,7 +118,7 @@ static SDT* findSDT(RSD* rsdp, const char* name) {
  
     return 0;
 }
-
+base
 static uint32_t memAbove1M() {
    ASSERT((memInfo.cx == 15 * 1024) || (memInfo.dx == 0));
 
@@ -154,9 +164,7 @@ void configInit(Config* config) {
         bytesForEntries -= len;
 
         if (entryPtr->type == 0) {
-            APIC_ENTRY *apic = (APIC_ENTRY*) entryPtr;
-            if (apic->processorId == 0) {
-                continue;
+            APIC_ENTRY *apic = (base
             }
             ApicInfo * info = &config->apicInfo[config->nOtherProcs ++];
             info->processorId = apic->processorId;
@@ -167,6 +175,10 @@ void configInit(Config* config) {
             IOAPIC_ENTRY *apic = (IOAPIC_ENTRY*) entryPtr;
             // Debug::printf("ID: %d, address: 0x%x, base: %d\n", apic->apicId, apic->address, apic->base);
             config->ioAPIC = apic->address;
+        } 
+        else if (entryPtr->type == 2) { //added this for keyboard
+            SOURCE_ENTRY *source = (SOURCE_ENTRY*) entryPtr;
+            config->globalSysInt = source->GSI;
         }
     }
 
