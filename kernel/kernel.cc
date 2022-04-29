@@ -30,6 +30,21 @@ Shared<Node> getDir(Shared<Ext2> fs, Shared<Node> node, const char* name) {
 }
 
 void kernelMain(void) {
+    // typedef unsigned char byte;
+    char *VGA = (char*)0xA0000;
+    // A0000000
+    // uint16_t offset = 0;
+    // uint32_t x = 0;
+    // uint32_t y = 20;
+    for (int i = 0; i < 3200; i++) {
+        VGA[i] = 0xc0;
+        // offset = x + y * 320;
+        // VGA[offset] = 4;
+        // y += 2;
+    }
+    while(true) {
+
+    }
     auto d = Shared<Ide>::make(1);
     Debug::printf("mounting drive 1\n");
     auto fs = Shared<Ext2>::make(d);
