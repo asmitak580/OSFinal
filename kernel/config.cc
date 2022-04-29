@@ -80,6 +80,11 @@ struct RSD {
 
 typedef struct RSD RSD;
 
+struct REDTBLENTRY {
+    
+} __attribute__ ((packed));
+
+typedef struct REDTBLENTRY REDTBLENTRY;
 static int iseq(const char* a, const char* b, uint32_t len) {
     for (uint32_t i = 0; i<len; i++) {
         if (a[i] != b[i]) return 0;
@@ -118,7 +123,7 @@ static SDT* findSDT(RSD* rsdp, const char* name) {
  
     return 0;
 }
-base
+
 static uint32_t memAbove1M() {
    ASSERT((memInfo.cx == 15 * 1024) || (memInfo.dx == 0));
 
@@ -127,9 +132,11 @@ static uint32_t memAbove1M() {
 
 }
 
+
 Config kConfig;
 
 void configInit(Config* config) {
+    uint32_t base = 0;
     config->memSize = memAbove1M() + (1 << 20);
     RSD* rsdp = findRSD();
     //Debug::printf("found rsd %x\n",(uint32_t)rsdp);
@@ -164,8 +171,7 @@ void configInit(Config* config) {
         bytesForEntries -= len;
 
         if (entryPtr->type == 0) {
-            APIC_ENTRY *apic = (base
-            }
+            APIC_ENTRY *apic = (APIC_ENTRY*) entryPtr;
             ApicInfo * info = &config->apicInfo[config->nOtherProcs ++];
             info->processorId = apic->processorId;
             info->apicId = apic->apicId;
@@ -175,10 +181,14 @@ void configInit(Config* config) {
             IOAPIC_ENTRY *apic = (IOAPIC_ENTRY*) entryPtr;
             // Debug::printf("ID: %d, address: 0x%x, base: %d\n", apic->apicId, apic->address, apic->base);
             config->ioAPIC = apic->address;
+            base = apic->base;
         } 
         else if (entryPtr->type == 2) { //added this for keyboard
             SOURCE_ENTRY *source = (SOURCE_ENTRY*) entryPtr;
             config->globalSysInt = source->GSI;
+            // read from ioredtable
+            uint32_t volatile *ioapic = (uint32_t volatile *) config->ioAPIC;
+            ioapic[0] = ((base+0x10) & 0xff);
         }
     }
 
