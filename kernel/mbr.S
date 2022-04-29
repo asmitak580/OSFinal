@@ -34,8 +34,11 @@ start:
     movw $0x6000,%si    # result buffer
     int $0x13        # call the BIOS
 
-    mov $0x0, %ah
-    mov $0x13, %al
+
+    mov $0x0, %ah      # NEW CODE: turn on graphics mode 13h
+    mov $0x13, %al 
+
+
     int $0x10
 
     movw 0x6010,%cx        # low 16 bits of sector count

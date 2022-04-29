@@ -221,4 +221,17 @@ sysHandler_:
         add $8,%esp
         iret
 
+    .extern keyboardHandler
+    .global _keyboardHandler
+_keyboardHandler:
+        cli
+        pusha
+        push %esp
+        call keyboardHandler
+        pop %esp
+        popa
+        sti
+        iret
+
+
 
