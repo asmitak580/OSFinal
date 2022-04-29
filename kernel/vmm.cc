@@ -75,10 +75,6 @@ void global_init() {
         map(shared,va,va);
     }
 
-    for (uint32_t va = 0xA0000; va < 0xBFFFF; va += FRAME_SIZE) {
-        va = va & 0x4;
-    }
-
 
 }
 

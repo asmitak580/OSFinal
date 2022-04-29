@@ -23,7 +23,6 @@ struct Config {
 
     ApicInfo apicInfo[MAX_PROCS];
     char oemid[7];
-    uint32_t globalSysInt;
 };
 
 typedef struct Config Config;

@@ -9,19 +9,6 @@ void one(int fd) {
 }
 
 int main(int argc, char** argv) {
-    // typedef unsigned char byte;
-    // char *VGA = (char*)0xA0000000L;
-    // uint16_t offset = 0;
-    // uint32_t x = 0;
-    // uint32_t y = 20;
-    // for (int i = 0; i < 20; i++) {
-    //     offset = x + y * 320;
-    //     VGA[offset] = 4;
-    //     y += 2;
-    // }
-
-    // *((uint32_t*)0xA0000) = 4;
-
     printf("*** %d\n",argc);
     for (int i=0; i<argc; i++) {
         printf("*** %s\n",argv[i]);

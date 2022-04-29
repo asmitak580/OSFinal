@@ -2,7 +2,6 @@
 #include "debug.h"
 #include "config.h"
 
-#define KEYBOARD_INTERRUPT 0x33;
 struct MemInfo {
     uint16_t ax;
     uint16_t bx;
@@ -61,7 +60,6 @@ struct IOAPIC_ENTRY {
 
 typedef struct IOAPIC_ENTRY IOAPIC_ENTRY;
 
-
 struct RSD {
     char Signature[8];
     uint8_t Checksum;
@@ -71,7 +69,6 @@ struct RSD {
 } __attribute__ ((packed));
 
 typedef struct RSD RSD;
-   
 
 static int iseq(const char* a, const char* b, uint32_t len) {
     for (uint32_t i = 0; i<len; i++) {
@@ -123,7 +120,6 @@ static uint32_t memAbove1M() {
 Config kConfig;
 
 void configInit(Config* config) {
-
     config->memSize = memAbove1M() + (1 << 20);
     RSD* rsdp = findRSD();
     //Debug::printf("found rsd %x\n",(uint32_t)rsdp);
@@ -159,6 +155,9 @@ void configInit(Config* config) {
 
         if (entryPtr->type == 0) {
             APIC_ENTRY *apic = (APIC_ENTRY*) entryPtr;
+            if (apic->processorId == 0) {
+                continue;
+            }
             ApicInfo * info = &config->apicInfo[config->nOtherProcs ++];
             info->processorId = apic->processorId;
             info->apicId = apic->apicId;
@@ -168,11 +167,7 @@ void configInit(Config* config) {
             IOAPIC_ENTRY *apic = (IOAPIC_ENTRY*) entryPtr;
             // Debug::printf("ID: %d, address: 0x%x, base: %d\n", apic->apicId, apic->address, apic->base);
             config->ioAPIC = apic->address;
-
-            base = apic->base;
-            apicID = apic->apicId;
-        } 
-       
+        }
     }
 
     config->totalProcs = config->nOtherProcs + 1;
