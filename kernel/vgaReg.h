@@ -29,7 +29,7 @@ unsigned int VGA_height;
 unsigned int VGA_bpp;
 unsigned char *VGA_address;
 
-inline   unsigned char _cdecl inportb (unsigned short portid) {
+inline unsigned char _cdecl inportb(unsigned short portid) {
 
    unsigned char res=0;
 
