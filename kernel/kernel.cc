@@ -45,6 +45,7 @@ void kernelMain(void) {
     while(true) {
 
     }
+    
     auto d = Shared<Ide>::make(1);
     Debug::printf("mounting drive 1\n");
     auto fs = Shared<Ext2>::make(d);
@@ -55,6 +56,7 @@ void kernelMain(void) {
     Debug::printf("loading init\n");
     uint32_t e = ELF::load(init);
     Debug::printf("entry %x\n",e);
+    
     // auto userEsp = K::min(kConfig.ioAPIC,kConfig.localAPIC);
     auto userEsp = (uint32_t*) 0xefffe000;
     Debug::printf("user esp %x\n",userEsp);

@@ -5,7 +5,7 @@
 #include "smp.h"
 #include "threads.h"
 
-#define KEYBOARD_INTERRUPT = 0X33;
+
 /*
  * The old PIT runs at a fixed frequency of 1193182Hz but doesn't support
  * multiple processors

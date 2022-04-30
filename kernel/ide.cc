@@ -58,7 +58,7 @@ static void waitForDrive(uint32_t drive) {
 }
 
 static uint32_t nRead = 0;
-static uint32_t nWrite = 0;
+// static uint32_t nWrite = 0;
 
 void Ide::read_block(uint32_t sector, char* buffer) {
     LockGuard g{lock};
@@ -151,6 +151,6 @@ int32_t Ide::write(uint32_t offset, const void* buffer, uint32_t n) {
 
 
 void ideStats(void) {
-    Debug::printf("nRead %d\n",nRead);
-    Debug::printf("nWrite %d\n",nWrite);
+    // Debug::printf("nRead %d\n",nRead);
+    // Debug::printf("nWrite %d\n",nWrite);
 }

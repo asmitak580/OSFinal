@@ -233,4 +233,16 @@ _keyboardHandler:
         sti
         iret
 
+    .extern mouseHandler
+    .global _mouseHandler
+_mouseHandler:
+        cli
+        pusha
+        push %esp
+        call keyboardHandler
+        pop %esp
+        popa
+        sti
+        iret
+
 

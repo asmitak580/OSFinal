@@ -126,7 +126,7 @@ int isTaken(int i) {
 void heapInit(void* base, size_t bytes) {
     using namespace gheith;
 
-    Debug::printf("| heap range 0x%x 0x%x\n",(uint32_t)base,(uint32_t)base+bytes);
+    // Debug::printf("| heap range 0x%x 0x%x\n",(uint32_t)base,(uint32_t)base+bytes);
 
     /* can't say new becasue we're initializing the heap */
     array = (int*) base;

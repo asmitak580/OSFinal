@@ -48,7 +48,9 @@ QEMU_FLAGS = -no-reboot \
 	     --serial file:$*.raw \
              -drive file=kernel/build/kernel.img,index=0,media=disk,format=raw \
              -drive file=$*.data,index=1,media=disk,format=raw \
-	     -device isa-debug-exit,iobase=0xf4,iosize=0x04
+	     -device isa-debug-exit,iobase=0xf4,iosize=0x04 \
+		 -device virtio-keyboard-pci \
+		 -device virtio-mouse-pci \
 
 TIME = $(shell which time)
 

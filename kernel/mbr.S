@@ -38,6 +38,7 @@ start:
     mov $0x13, %al 
     int $0x10
 
+
     movw 0x6010,%cx        # low 16 bits of sector count
                 # this limits hdd size to 64k * 512 = 32MB
 
