@@ -7,7 +7,7 @@
 // o is orange
 // y is yellow
 // v is violet
-int VGA_color = 0x04;
+extern int VGA_color;
 unsigned char ascii[256] = {
     0x0, 0x0, '1', '2', '3', '4', '5', '6',		// 0 - 7
     '7', '8', '9', '0', '-', '=', 0x0, 0x0,		// 8 - 15

@@ -6,8 +6,16 @@
 
 void KEYBOARD::init(void) {
    IDT::interrupt(9, (uint32_t)_keyboardHandler);
-   outb(0x64,0xAB);
+   outb(0x64,0xAE);
    
+}
+
+unsigned char readCode(void) {
+	return inb(0x60);
+}
+
+unsigned char codeToValue(unsigned char code) {
+	return ascii[code];
 }
 
 extern "C" void keyboardHandler(uint32_t* things) {
@@ -38,12 +46,4 @@ extern "C" void keyboardHandler(uint32_t* things) {
          VGA_color = 0x05;
       }
    }
-}
-
-unsigned char readCode(void) {
-	return inb(0x60);
-}
-
-unsigned char codeToValue(unsigned char code) {
-	return ascii[code];
 }

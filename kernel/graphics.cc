@@ -3,7 +3,27 @@
 #include "config.h"
 #include "keyboard.h"
 
-void drawRect(int offset, char *VGA, int VGA_color) {
+
+void drawHorizLine(uint32_t start, char *VGA, uint32_t length, int VGA_color) {
+    // i mod 320 is 1
+    for(uint32_t i = start; i < start + length && i < 64000; i++) {
+        VGA[i] = VGA_color; //choose color
+    }
+}
+
+
+void drawVertLine(uint32_t start, char *VGA, uint32_t height, int VGA_color) {
+    
+    for(uint32_t i = start; i < (start+height-2); i+= 321) {
+        if(i < 64000) {
+            break;
+        }
+        VGA[i] = VGA_color; // color
+    }
+
+}
+
+void drawRect(uint32_t offset, char *VGA, int VGA_color) {
     // offset is top left corner of rectangle
     if (offset >= 64000) {
         return;
@@ -15,21 +35,5 @@ void drawRect(int offset, char *VGA, int VGA_color) {
     drawVertLine(offset, VGA, columnHeight, VGA_color);
     drawVertLine(offset + rowWidth, VGA, columnHeight, VGA_color);
     drawHorizLine(offset+(320*(columnHeight))+1, VGA, rowWidth, VGA_color);
-
-}
-
-
-void drawHorizLine(int start, char *VGA, int length, int VGA_color) {
-    // i mod 320 is 1
-    for(int i = start; i < start + length && i < 64000; i++) {
-        VGA[i] = VGA_color; //choose color
-    }
-}
-
-
-void drawVertLine(int start, char *VGA, int height, int VGA_color) {
-    for(int i = start; i < start+height-2 && i < 64000; i+= 321) {
-        VGA[i] = VGA_color; // color
-    }
 
 }
