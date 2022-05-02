@@ -9,5 +9,5 @@ time `make qemu_cmd` `make qemu_config_flags` \
              -drive file=kernel/build/kernel.img,index=0,media=disk,format=raw \
              -drive file=$1.data,index=1,media=disk,format=raw \
              -device isa-debug-exit,iobase=0xf4,iosize=0x04 || true \
-             -device virtio-keyboard-device \
              -device virtio-mouse-pci \
+             -k en-US \

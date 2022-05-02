@@ -5,6 +5,7 @@
 #include "machine.h"
 #include "libk.h"
 #include "config.h"
+#include "graphics.h"
 
 Shared<Node> checkFile(const char* name, Shared<Node> node) {
     // CHECK(node != nullptr);
@@ -31,19 +32,36 @@ Shared<Node> getDir(Shared<Ext2> fs, Shared<Node> node, const char* name) {
 
 void kernelMain(void) {
     // typedef unsigned char byte;
-    char *VGA = (char*)0xA0000;
-    // A0000000
-    // uint16_t offset = 0;
-    // uint32_t x = 0;
-    // uint32_t y = 20;
-    for (int i = 0; i < 3200; i++) {
-        VGA[i] = 0xc0;
-        // offset = x + y * 320;
-        // VGA[offset] = 4;
-        // y += 2;
-    }
+    // char *VGA = (char*)0xA0000;
+    // // A0000000
+    // // uint16_t offset = 0;
+    // // uint32_t x = 0;
+    // // uint32_t y = 20;
+    // for (int i = 0; i < 3200; i++) {
+    //     VGA[i] = 0x0f;
+    //     // offset = x + y * 320;
+    //     // VGA[offset] = 4;
+    //     // y += 2;
+    // }
+    // int i = 4000;
+    // int color = 0x28;
     while(true) {
-
+        // // extra small
+        // drawRect(i, VGA, color);
+        // i+= 100;
+        // color += 0x01;
+        // small rects
+        // drawRect(i, VGA, color);
+        // i+= 500;
+        // color += 0x01;
+        // medium rects we like these!!!
+        // drawRect(i, VGA, color);
+        // i+= 1000;
+        // color += 0x01;
+        // big rects
+        // drawRect(i, VGA, color);
+        // i+= 3000;
+        // color += 0x01;
     }
     
     auto d = Shared<Ide>::make(1);

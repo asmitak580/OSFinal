@@ -20,7 +20,9 @@ unsigned char ascii[256] = {
 
 void KEYBOARD::init(void) {
    IDT::interrupt(9, (uint32_t)_keyboardHandler);
-   outb(0x12,0xA0);
+   // write interrupt vector to 0x12?
+   outb(0x21,0xFD);
+   // write local apic id to 0x13?
    
 }
 
@@ -33,8 +35,24 @@ unsigned char codeToValue(unsigned char code) {
 }
 
 extern "C" void keyboardHandler(uint32_t* things) {
-   Debug::printf("hit keyboard handler\n");
+   //read scan code
+   
+   char *VGA = (char*)0xA0000;
+    // A0000000
+    // uint16_t offset = 0;
+    // uint32_t x = 0;
+    // uint32_t y = 20;
+    for (int i = 0; i < 3200; i++) {
+        VGA[i] = 0x0f;
+        // offset = x + y * 320;
+        // VGA[offset] = 4;
+        // y += 2;
+    }
+   // Debug::printf("hit keyboard handler\n");
+   // char* nul = nullptr;
+   // nul[0] = 'k';
    unsigned char code = readCode();
+   outb(0x20,0x20); //ACK
    if (code <= 0x83) {
       unsigned char value = codeToValue(code);
       // r is red

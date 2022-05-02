@@ -124,6 +124,9 @@ extern "C" void kernelInit(void) {
 
         SMP::running.fetch_add(1);
 
+        //initialize the KEYBOARD 
+        // KEYBOARD::init();
+
         // The reset EIP has to be
         //     - divisible by 4K (required by LAPIC)
         //     - PPN must fit in 8 bits (required by LAPIC)
@@ -146,8 +149,8 @@ extern "C" void kernelInit(void) {
     // Initialize the PIT
     Pit::init();
 
-    //initialize the KEYBOARD 
-    KEYBOARD::init();
+    // //initialize the KEYBOARD 
+    // KEYBOARD::init();
 
     //initialize the MOUSE
     MOUSE::init();
@@ -164,6 +167,7 @@ extern "C" void kernelInit(void) {
     auto myOrder = howManyAreHere.add_fetch(1);
     if (myOrder == kConfig.totalProcs) {
         thread([] {
+            KEYBOARD::init();
             kernelMain();
             Debug::shutdown();
         });

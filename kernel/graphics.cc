@@ -2,6 +2,7 @@
 #include "libk.h"
 #include "config.h"
 #include "keyboard.h"
+#include "graphics.h"
 
 
 void drawHorizLine(uint32_t start, char *VGA, uint32_t length, int VGA_color) {
@@ -14,10 +15,7 @@ void drawHorizLine(uint32_t start, char *VGA, uint32_t length, int VGA_color) {
 
 void drawVertLine(uint32_t start, char *VGA, uint32_t height, int VGA_color) {
     
-    for(uint32_t i = start; i < (start+height-2); i+= 321) {
-        if(i < 64000) {
-            break;
-        }
+    for(uint32_t i = start; i <= (start+320*height) && i < 64000; i+= 320) {
         VGA[i] = VGA_color; // color
     }
 
@@ -34,6 +32,6 @@ void drawRect(uint32_t offset, char *VGA, int VGA_color) {
 
     drawVertLine(offset, VGA, columnHeight, VGA_color);
     drawVertLine(offset + rowWidth, VGA, columnHeight, VGA_color);
-    drawHorizLine(offset+(320*(columnHeight))+1, VGA, rowWidth, VGA_color);
+    drawHorizLine(offset+(320*(columnHeight)), VGA, rowWidth, VGA_color);
 
 }
