@@ -37,17 +37,6 @@ unsigned char codeToValue(unsigned char code) {
 extern "C" void keyboardHandler(uint32_t* things) {
    //read scan code
    
-   char *VGA = (char*)0xA0000;
-    // A0000000
-    // uint16_t offset = 0;
-    // uint32_t x = 0;
-    // uint32_t y = 20;
-    for (int i = 0; i < 3200; i++) {
-        VGA[i] = 0x0f;
-        // offset = x + y * 320;
-        // VGA[offset] = 4;
-        // y += 2;
-    }
    // Debug::printf("hit keyboard handler\n");
    // char* nul = nullptr;
    // nul[0] = 'k';
@@ -78,4 +67,5 @@ extern "C" void keyboardHandler(uint32_t* things) {
          VGA_color = 0x05;
       }
    }
+  
 }
