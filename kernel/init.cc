@@ -153,7 +153,7 @@ extern "C" void kernelInit(void) {
     // KEYBOARD::init();
 
     //initialize the MOUSE
-    MOUSE::init();
+    
 
     auto id = SMP::me();
 
@@ -168,6 +168,7 @@ extern "C" void kernelInit(void) {
     if (myOrder == kConfig.totalProcs) {
         thread([] {
             KEYBOARD::init();
+            MOUSE::init();
             kernelMain();
             Debug::shutdown();
         });
