@@ -35,3 +35,41 @@ void drawRect(uint32_t offset, char *VGA, int VGA_color) {
     drawHorizLine(offset+(320*(columnHeight)), VGA, rowWidth, VGA_color);
 
 }
+
+void drawTriangle(uint32_t offset, char *VGA, int VGA_color) {
+    if (offset >= 64000) {
+        return;
+    }
+    uint32_t size = 40;
+    drawHorizLine(offset, VGA, size, VGA_color);
+    // drawDiagRight(offset + size, VGA, size, VGA_color); //trapezoid
+    drawDiagRight(offset, VGA, size, VGA_color);
+    // drawDiagLeft(offset, VGA, size, VGA_color);//trapezoid
+    drawDiagLeft(offset + size, VGA, size, VGA_color);
+
+}
+
+void drawDiagLeft(uint32_t start, char *VGA, uint32_t height, int VGA_color) {
+    for(uint32_t i = start; i <= (start+320*(height/2) + height/2) && i < 64000; i+= 319) {
+        VGA[i] = VGA_color; // color
+    }
+}
+
+
+void drawDiagRight(uint32_t start, char *VGA, uint32_t height, int VGA_color) {
+    for(uint32_t i = start; i <= (start+320*(height/2) + height/2) && i < 64000; i+= 321) {
+        VGA[i] = VGA_color; // color
+    }
+}
+
+void drawTrap(uint32_t offset, char *VGA, int VGA_color) {
+    if (offset >= 64000) {
+        return;
+    }
+    uint32_t size = 25;
+    drawHorizLine(offset, VGA, size, VGA_color);
+    drawDiagRight(offset + size, VGA, size*2, VGA_color); //trapezoid
+    drawDiagLeft(offset, VGA, size*2, VGA_color);//trapezoid
+    drawHorizLine(offset+(320*size)-size, VGA, size*3, VGA_color);
+
+}

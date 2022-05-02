@@ -168,7 +168,7 @@ extern "C" void kernelInit(void) {
     if (myOrder == kConfig.totalProcs) {
         thread([] {
             KEYBOARD::init();
-            MOUSE::init();
+            // MOUSE::init();
             kernelMain();
             Debug::shutdown();
         });

@@ -2,6 +2,7 @@
 #include "idt.h"
 #include "debug.h"
 #include "machine.h"
+#include "graphics.h"
 
 int VGA_color = 0x0c;
 unsigned char ascii[256] = {
@@ -42,6 +43,12 @@ extern "C" void keyboardHandler(uint32_t* things) {
    // nul[0] = 'k';
    unsigned char code = readCode();
    outb(0x20,0x20); //ACK
+   char *VGA = (char*)0xA0000;
+   //  for (int i = 0; i < 3200; i++) {
+   //      VGA[i] = VGA_color;
+   //  }
+   
+   
    if (code <= 0x83) {
       unsigned char value = codeToValue(code);
       // r is red
@@ -52,19 +59,27 @@ extern "C" void keyboardHandler(uint32_t* things) {
       // y is yellow
       // v is violet
       if(value == 'r') {
+         // char *VGA = (char*)0xA0000;
          VGA_color = 0x28;
+         // drawTriangle(4000, VGA, VGA_color);
       } else if(value == 'g') {
          VGA_color = 0x02;
       } else if(value == 'b') {
          VGA_color = 0x01;
       } else if(value == 'p') {
-         VGA_color = 0x12;
+         VGA_color = 0x24;
       } else if(value == 'o') {
          VGA_color = 0x2A;
       } else if(value == 'y') {
-         VGA_color = 0x14;
+         VGA_color = 0x2c;
       } else if(value == 'v') {
-         VGA_color = 0x05;
+         VGA_color = 0x22;
+      } else if(value == '2') {
+         drawTriangle(6000, VGA, VGA_color);
+      } else if(value == '3') {
+         drawTrap(10000, VGA, VGA_color);
+      } else if(value == '1') {
+         drawRect(2000, VGA, VGA_color);
       }
    }
   

@@ -34,15 +34,8 @@ Shared<Node> getDir(Shared<Ext2> fs, Shared<Node> node, const char* name) {
 void kernelMain(void) {
     // typedef unsigned char byte;
     // char *VGA = (char*)0xA0000;
-    // // A0000000
-    // // uint16_t offset = 0;
-    // // uint32_t x = 0;
-    // // uint32_t y = 20;
     // for (int i = 0; i < 3200; i++) {
     //     VGA[i] = VGA_color;
-    //     // offset = x + y * 320;
-    //     // VGA[offset] = 4;
-    //     // y += 2;
     //}
     // int i = 4000;
     // int color = 0x28;
