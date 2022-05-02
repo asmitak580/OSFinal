@@ -54,7 +54,7 @@ namespace PhysMem {
     void init(uint32_t start, uint32_t size) {
         ASSERT(offset(start) == 0);
         ASSERT(offset(size) == 0);
-        Debug::printf("| physical range 0x%x 0x%x\n",start,start+size);
+    // Debug::printf("| physical range 0x%x 0x%x\n",start,start+size);
         avail = start;
         limit = start + size;
 

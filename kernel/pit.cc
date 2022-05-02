@@ -63,14 +63,14 @@ void Pit::calibrate(uint32_t hz) {
     SMP::apit_divide.set(0x0000000B); // divide by 1
 
     // Now let's program the PIT to compute the frequency
-    Debug::printf("| pitInit freq %dHz\n",hz);
+    // Debug::printf("| pitInit freq %dHz\n",hz);
     uint32_t d = PIT_FREQ / 20;
 
     if ((d & 0xffff) != d) {
-        Debug::printf("| pitInit invalid divider %d\n",d);
+        // Debug::printf("| pitInit invalid divider %d\n",d);
         d = 0xffff;
     }
-    Debug::printf("| pitInit divider %d\n",d);
+    // Debug::printf("| pitInit divider %d\n",d);
 
     uint32_t initial = 0xffffffff;
     SMP::apit_initial_count.set(initial);
@@ -107,10 +107,10 @@ void Pit::calibrate(uint32_t hz) {
     // stop the PIT
     outb(0x61,0);
 
-    Debug::printf("| APIT running at %uHz\n",diff);
+    // Debug::printf("| APIT running at %uHz\n",diff);
     apitCounter = diff / hz;
     jiffiesPerSecond = hz;
-    Debug::printf("| APIT counter=%d for %dHz\n",apitCounter,hz);
+    // Debug::printf("| APIT counter=%d for %dHz\n",apitCounter,hz);
 
     // Register the APIT interrupt handler
     IDT::interrupt(APIT_vector, (uint32_t)apitHandler_);
