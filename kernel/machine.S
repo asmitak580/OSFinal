@@ -239,7 +239,7 @@ _mouseHandler:
         cli
         pusha
         push %esp
-        call keyboardHandler
+        call mouseHandler
         pop %esp
         popa
         sti
