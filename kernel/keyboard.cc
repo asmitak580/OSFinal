@@ -4,6 +4,8 @@
 #include "machine.h"
 #include "graphics.h"
 
+uint32_t offset = 0;
+unsigned char prev = 0;
 int VGA_color = 0x0c;
 unsigned char ascii[256] = {
     0x0, 0x0, '1', '2', '3', '4', '5', '6',		// 0 - 7
@@ -58,29 +60,100 @@ extern "C" void keyboardHandler(uint32_t* things) {
       // o is orange
       // y is yellow
       // v is violet
-      if(value == 'r') {
+      if(value == 'r') { //red
          // char *VGA = (char*)0xA0000;
          VGA_color = 0x28;
          // drawTriangle(4000, VGA, VGA_color);
-      } else if(value == 'g') {
+      } else if(value == 'g') { //green
          VGA_color = 0x02;
-      } else if(value == 'b') {
+      } else if(value == 'b') { //blue
          VGA_color = 0x01;
-      } else if(value == 'p') {
+      } else if(value == 'p') { // pink
          VGA_color = 0x24;
-      } else if(value == 'o') {
+      } else if(value == 'o') { //orange
          VGA_color = 0x2A;
-      } else if(value == 'y') {
+      } else if(value == 'y') { //yellow
          VGA_color = 0x2c;
-      } else if(value == 'v') {
+      } else if(value == 'v') { //violet
          VGA_color = 0x22;
-      } else if(value == '2') {
-         drawTriangle(6000, VGA, VGA_color);
-      } else if(value == '3') {
-         drawTrap(10000, VGA, VGA_color);
+      } else if(value == 't'){ //turquoise
+         VGA_color = 0x34;
       } else if(value == '1') {
-         drawRect(2000, VGA, VGA_color);
+         prev = value;
+         IBlock(offset, VGA, 10, 0x34);
+         IBlockParam(offset,VGA, 10, 0x03);
+      } else if(value == '2') {
+         prev = value;
+         JBlock(offset, VGA, 10, 0x37);
+         JBlockParam(offset, VGA, 10, 0x01);
+      } else if(value == '3') {
+         prev = value;
+         LBlock(offset, VGA, 10, 0x2A);    
+         LBlockParam(offset, VGA, 10, 0x06);        
+      } else if(value == '4') {
+         prev = value;
+         OBlock(offset, VGA, 10, 0x2c);
+         OBlockParam(offset, VGA, 10, 0x74);
+      } else if(value == '5') {
+         prev = value;
+         SBlock(offset, VGA, 10, 0x30);
+         SBlockParam(offset, VGA, 10, 0x02);
+      } else if(value == '6') {
+         prev = value;
+         TBlock(offset, VGA, 10, 0x22);
+         TBlockParam(offset, VGA, 10, 0x6A);
+      } else if(value == '7') {
+         prev = value;
+         ZBlock(offset, VGA, 10, 0x28);
+         ZBlockParam(offset, VGA, 10, 0x04);
+      } else if(value == 'w') {
+         if(prev != '0') {
+            clear(offset, VGA, 10, prev);
+            prev = '0';
+         }
+         offset -= 320*10;
+      } else if(value == 's') {
+         if(prev != '0') {
+            clear(offset, VGA, 10, prev);
+            prev = '0';
+         }
+         offset += 320*10;
+      } else if(value == 'a') {
+         if(prev != '0') {
+            clear(offset, VGA, 10, prev);
+            prev = '0';
+         }
+         offset -= 40;
+      } else if(value == 'd') {
+         if(prev != '0') {
+            clear(offset, VGA, 10, prev);
+            prev = '0';
+         }
+         offset += 40;
+      } else if (value == '0') {
+         clear(offset, VGA, 10, prev);
+      } else if (value == '/') {
+         offset = 0;
+         prev = '0';
       }
    }
   
+}
+
+void clear(uint32_t offset, char* VGA, uint32_t len, unsigned char value) {
+   if (value == '1') {
+         clearIBlock(offset, VGA, len);
+      } else if(value == '2') {
+         clearJBlock(offset, VGA, len);
+      } else if(value == '3') {
+         clearLBlock(offset, VGA, len);        
+      } else if(value == '4') {
+         clearOBlock(offset, VGA, len);
+      } else if(value == '5') {
+         clearSBlock(offset, VGA, len);
+      } else if(value == '6') {
+         clearTBlock(offset, VGA, len);
+      } else if(value == '7') {
+         clearZBlock(offset, VGA, len);
+      }
 }

@@ -1,3 +1,6 @@
+#include "debug.h"
+#include "libk.h"
+#include "config.h"
 #ifndef _KEYBOARD_H
 #define _KEYBOARD_H
 // r is red
@@ -7,8 +10,11 @@
 // o is orange
 // y is yellow
 // v is violet
+// T IS TURQUOISE
+extern uint32_t offset;
 extern int VGA_color;
 extern unsigned char ascii[256];
+extern void clear(uint32_t offset, char* VGA, uint32_t len, unsigned char value);
 
 class KEYBOARD {
 public:
