@@ -12,7 +12,6 @@ void drawHorizLine(uint32_t start, char *VGA, uint32_t length, int VGA_color) {
     }
 }
 
-
 void drawVertLine(uint32_t start, char *VGA, uint32_t height, int VGA_color) {
     
     for(uint32_t i = start; i <= (start+320*height) && i < 64000; i+= 320) {
@@ -66,7 +65,7 @@ void drawTrap(uint32_t offset, char *VGA, int VGA_color) {
     if (offset >= 64000) {
         return;
     }
-    uint32_t size = 25;
+    uint32_t size = 10;
     drawHorizLine(offset, VGA, size, VGA_color);
     drawDiagRight(offset + size, VGA, size*2, VGA_color); //trapezoid
     drawDiagLeft(offset, VGA, size*2, VGA_color);//trapezoid
@@ -78,7 +77,7 @@ void drawHexa(uint32_t offset, char *VGA, int VGA_color) {
     if (offset >= 64000) {
         return;
     }
-    uint32_t size = 20;
+    uint32_t size = 10;
     drawHorizLine(offset, VGA, size, VGA_color);
     drawDiagRight(offset + size, VGA, size*2, VGA_color); //trapezoid
     drawDiagLeft(offset, VGA, size*2, VGA_color);//trapezoid
@@ -91,7 +90,7 @@ void drawOcta(uint32_t offset, char *VGA, int VGA_color) {
     if (offset >= 64000) {
         return;
     }
-    uint32_t size = 20;
+    uint32_t size = 10;
     drawHorizLine(offset, VGA, size, VGA_color);
     drawDiagRight(offset + size, VGA, size, VGA_color); //trapezoid
     drawDiagLeft(offset, VGA, size, VGA_color);//trapezoid

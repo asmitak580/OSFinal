@@ -50,11 +50,11 @@ extern "C" void keyboardHandler(uint32_t* things) {
    //  for (int i = 0; i < 3200; i++) {
    //      VGA[i] = VGA_color;
    //  }
-   // drawRect(640, VGA, VGA_color);
-   // drawTriangle(3000, VGA, VGA_color);
-   // drawTrap(10000, VGA, VGA_color);
-   // drawOcta(15000, VGA, VGA_color);
-   // drawHexa(25000, VGA, VGA_color);
+   drawRect(1300+2920-30, VGA, VGA_color);
+   drawTriangle(1300+2920+30, VGA, VGA_color);
+   drawTrap(1300+2920-210, VGA, VGA_color);
+   drawOcta(1300+2920-160, VGA, VGA_color);
+   drawHexa(1300+2920-105, VGA, VGA_color);
    
    if (code <= 0x83) {
       unsigned char value = codeToValue(code);
@@ -68,7 +68,7 @@ extern "C" void keyboardHandler(uint32_t* things) {
       if(value == 'r') { //red
          VGA_color = 0x28;
       } else if(value == 'g') { //green
-         VGA_color = 0x02;
+         VGA_color = 0x35;
       } else if(value == 'b') { //blue
          VGA_color = 0x01;
       } else if(value == 'p') { // pink
