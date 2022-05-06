@@ -8,6 +8,7 @@ uint32_t offset = 0;
 unsigned char prev = 0;
 int VGA_color = 0x0c;
 uint32_t rot[7] = {0,0,0,0};
+// translating keyboard scancodes into char values
 unsigned char ascii[256] = {
     0x0, 0x0, '1', '2', '3', '4', '5', '6',		// 0 - 7
     '7', '8', '9', '0', '-', '=', 0x0, 0x0,		// 8 - 15
@@ -23,54 +24,42 @@ unsigned char ascii[256] = {
 };
 
 void KEYBOARD::init(void) {
+   // initialize keyboard with interrupts
+   // setting entry 9 of IDT to keyboardHandler
    IDT::interrupt(9, (uint32_t)_keyboardHandler);
-   // write interrupt vector to 0x12?
+   // unmask IRQ1 by sending interrupt mask to PIC1
    outb(0x21,0xFD);
-   // write local apic id to 0x13?
-   
 }
 
 unsigned char readCode(void) {
+   // read scancode from IO data port 0x60
 	return inb(0x60);
 }
 
 unsigned char codeToValue(unsigned char code) {
+   // translate scancode to char value
 	return ascii[code];
 }
 
 extern "C" void keyboardHandler(uint32_t* things) {
-   //read scan code
-   
    // Debug::printf("hit keyboard handler\n");
-   // char* nul = nullptr;
-   // nul[0] = 'k';
+   //read scan code
    unsigned char code = readCode();
-   outb(0x20,0x20); //ACK
+   // acknowledge interrupt
+   outb(0x20,0x20); 
+   // initialize VGA array 
    char *VGA = (char*)0xA0000;
-   //  for (int i = 0; i < 3200; i++) {
-   //      VGA[i] = VGA_color;
-   //  }
-   drawRect(1300+2920-30, VGA, VGA_color);
-   drawTriangle(1300+2920+30, VGA, VGA_color);
-   drawTrap(1300+2920-210, VGA, VGA_color);
-   drawOcta(1300+2920-160, VGA, VGA_color);
-   drawHexa(1300+2920-105, VGA, VGA_color);
-   
+   // max code is 0x83
    if (code <= 0x83) {
+      // find char value from scancode
       unsigned char value = codeToValue(code);
-      // r is red
-      // g is green
-      // b is blue
-      // p is pink
-      // o is orange
-      // y is yellow
-      // v is violet
+      // mapping keys to do many things :)
       if(value == 'r') { //red
          VGA_color = 0x28;
       } else if(value == 'g') { //green
-         VGA_color = 0x35;
+         VGA_color = 0x30;
       } else if(value == 'b') { //blue
-         VGA_color = 0x01;
+         VGA_color = 0x35;
       } else if(value == 'p') { // pink
          VGA_color = 0x24;
       } else if(value == 'o') { //orange
@@ -144,6 +133,14 @@ extern "C" void keyboardHandler(uint32_t* things) {
          value = prev;
       }
    }
+    //  for (int i = 0; i < 3200; i++) {
+   //      VGA[i] = VGA_color;
+   //  }
+   // drawRect(1300+2920-30, VGA, VGA_color);
+   // drawTriangle(1300+2920+30, VGA, VGA_color);
+   // drawTrap(1300+2920-210, VGA, VGA_color);
+   // drawOcta(1300+2920-160, VGA, VGA_color);
+   // drawHexa(1300+2920-105, VGA, VGA_color);
   
 }
 

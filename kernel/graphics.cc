@@ -220,8 +220,8 @@ void LBlock(uint32_t offset, char *VGA, uint32_t length, int VGA_color) {
     } else if(rot[2] == 3) {
         drawSquare(offset+320,VGA, length, VGA_color);
         drawSquare(offset+320+length,VGA, length, VGA_color);
-        drawSquare(offset+320*length,VGA, length, VGA_color);
-        drawSquare(offset+320*length*2,VGA, length, VGA_color);
+        drawSquare(offset+320*length+length,VGA, length, VGA_color);
+        drawSquare(offset+320*length*2+length,VGA, length, VGA_color);
     }
 }
 void LBlockPerim(uint32_t offset, char *VGA, uint32_t length, int VGA_color) {
@@ -243,8 +243,8 @@ void LBlockPerim(uint32_t offset, char *VGA, uint32_t length, int VGA_color) {
     } else if(rot[2] == 3) {
         drawSquarePerimeter(offset+320,VGA, length, VGA_color);
         drawSquarePerimeter(offset+320+length,VGA, length, VGA_color);
-        drawSquarePerimeter(offset+320*length,VGA, length, VGA_color);
-        drawSquarePerimeter(offset+320*length*2,VGA, length, VGA_color);
+        drawSquarePerimeter(offset+320*length+length,VGA, length, VGA_color);
+        drawSquarePerimeter(offset+320*length*2+length,VGA, length, VGA_color);
     }
 }
 
