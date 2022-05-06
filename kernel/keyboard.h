@@ -3,6 +3,7 @@
 #include "config.h"
 #ifndef _KEYBOARD_H
 #define _KEYBOARD_H
+// ascii array from https://github.com/HasiniSama/pocketOS/tree/interupt_and_inputs/drivers
 // r is red
 // g is green
 // b is blue
