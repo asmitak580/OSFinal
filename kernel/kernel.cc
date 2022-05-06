@@ -38,6 +38,7 @@ void kernelMain(void) {
     // for (int i = 0; i < 3200; i++) {
     //     VGA[i] = VGA_color;
     //}
+    
     // int i = 4000;
     // int color = 0x28;
     while(true) {
@@ -50,7 +51,11 @@ void kernelMain(void) {
         // i+= 500;
         // color += 0x01;
         // medium rects we like these!!!
-        // drawRect(i, VGA, color);
+        //drawRect(i, VGA, color);
+        // drawTriangle(i, VGA, color);
+        //drawTrap(i, VGA, color);
+        // drawOcta(i, VGA, color);
+        // drawHexa(i, VGA, color);
         // i+= 1000;
         // color += 0x01;
         // big rects

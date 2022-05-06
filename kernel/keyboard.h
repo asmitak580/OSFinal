@@ -13,9 +13,11 @@
 // T IS TURQUOISE
 extern uint32_t offset;
 extern int VGA_color;
+extern uint32_t rot[7];
 extern unsigned char ascii[256];
 extern void clear(uint32_t offset, char* VGA, uint32_t len, unsigned char value);
-
+extern void rotate(unsigned char value, char* VGA);
+extern void printBlock(char unsigned value, char* VGA);
 class KEYBOARD {
 public:
     static void init(void);
