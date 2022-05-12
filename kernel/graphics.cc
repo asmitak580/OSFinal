@@ -4,7 +4,7 @@
 #include "keyboard.h"
 #include "graphics.h"
 
-
+// Drawing shapes
 void drawHorizLine(uint32_t start, char *VGA, uint32_t length, int VGA_color) {
     // i mod 320 is 1
     for(uint32_t i = start; i < start + length && i < 64000; i++) {
@@ -149,8 +149,6 @@ void IBlockPerim(uint32_t offset, char *VGA, uint32_t length, int VGA_color) {
     }
 }
 
-
-
 // J BLOCK
 void JBlock(uint32_t offset, char *VGA, uint32_t length, int VGA_color) {
     if(rot[1] == 0) {
@@ -175,6 +173,7 @@ void JBlock(uint32_t offset, char *VGA, uint32_t length, int VGA_color) {
         drawSquare(offset+320*length*2,VGA, length, VGA_color);
     }
 }
+
 void JBlockPerim(uint32_t offset, char *VGA, uint32_t length, int VGA_color) {
     if(rot[1] == 0) {
         drawSquarePerimeter(offset+320,VGA, length, VGA_color);
