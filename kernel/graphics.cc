@@ -54,7 +54,6 @@ void drawDiagLeft(uint32_t start, char *VGA, uint32_t height, int VGA_color) {
     }
 }
 
-
 void drawDiagRight(uint32_t start, char *VGA, uint32_t height, int VGA_color) {
     for(uint32_t i = start; i <= (start+320*(height/2) + height/2) && i < 64000; i+= 321) {
         VGA[i] = VGA_color; // color
